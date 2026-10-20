@@ -408,7 +408,7 @@ function CellEditor({ field, cell, onSet }: { field: DbField; cell?: DbCell | un
       </select>
     );
   }
-  return <TextCell type={field.type} value={value} onSet={onSet} />;
+  return <TextCell type={field.type as FieldType} value={value} onSet={onSet} />;
 }
 
 function TextCell({ type, value, onSet }: { type: FieldType; value: unknown; onSet: (v: unknown) => void }) {
