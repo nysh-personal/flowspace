@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { subDays } from "date-fns";
 import type { Database } from "@/integrations/supabase/types";
 
 export type Task = Database["public"]["Tables"]["tasks"]["Row"];
@@ -87,3 +88,13 @@ export function todayISO(d = new Date()) {
   const z = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
   return z.toISOString().slice(0, 10);
 }
+
+export function streak(logs: HabitLog[], habitId: string, today = todayISO()) {
+  const days = new Set(logs.filter((l) => l.habit_id === habitId).map((l) => l.day));
+  let n = 0;
+  let d = new Date(today + "T00:00");
+  if (!days.has(today)) d = subDays(d, 1);
+  while (days.has(todayISO(d))) { n++; d = subDays(d, 1); }
+  return n;
+}
+

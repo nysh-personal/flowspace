@@ -3,21 +3,12 @@ import { useState } from "react";
 import { format, subDays } from "date-fns";
 import { Flame, Plus, Trash2 } from "lucide-react";
 import { EmptyNote } from "@/components/tasks";
-import { todayISO, useCrud, useHabitLogs, useHabits, type HabitLog } from "@/lib/data";
+import { streak, todayISO, useCrud, useHabitLogs, useHabits } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/app/habits")({
   component: Habits,
 });
-
-export function streak(logs: HabitLog[], habitId: string, today = todayISO()) {
-  const days = new Set(logs.filter((l) => l.habit_id === habitId).map((l) => l.day));
-  let n = 0;
-  let d = new Date(today + "T00:00");
-  if (!days.has(today)) d = subDays(d, 1);
-  while (days.has(todayISO(d))) { n++; d = subDays(d, 1); }
-  return n;
-}
 
 function Habits() {
   const { data: habits = [] } = useHabits();
