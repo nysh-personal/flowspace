@@ -141,7 +141,7 @@ export const aiChat = createServerFn({ method: "POST" })
       ].join("\n\n");
 
       const msgs: ChatMsg[] = [
-        { role: "system", content: `You are Flo, a friendly productivity assistant inside Flowspace (tasks, notes, habits). Be concise and practical. Use the user's workspace data below when relevant.\n\n${ctx}` },
+        { role: "system", content: `You are Flo, a friendly productivity assistant inside Flowspace (tasks, notes, habits). Be concise and practical. Reply in plain text without markdown symbols like ** or #. Use the user's workspace data below when relevant.\n\n${ctx}` },
         ...(history ?? []).reverse().map((m) => ({ role: m.role as "user" | "assistant", content: m.content })),
       ];
       const reply = await minimaxChat(msgs);
