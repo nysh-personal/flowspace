@@ -35,8 +35,8 @@ function Landing() {
       </header>
       <main className="mx-auto max-w-6xl px-5 pb-20 pt-10 md:pt-20">
         <h1 className="max-w-4xl font-display text-5xl font-extrabold leading-[0.95] md:text-8xl">
-          Your notes, <span className="rounded-2xl bg-coral px-3 text-primary-foreground">to-dos</span> and{" "}
-          <span className="rounded-2xl bg-lime px-3">habits</span>. One loud, happy place.
+          Your notes, <span className="whitespace-nowrap rounded-2xl bg-coral px-3 text-primary-foreground">to‑dos</span> and{" "}
+          <span className="whitespace-nowrap rounded-2xl bg-lime px-3">habits</span>. One loud, happy place.
         </h1>
         <p className="mt-6 max-w-xl text-lg text-muted-foreground">
           Write like Notion, plan like TickTick, organize like Taskade — without juggling three apps.
