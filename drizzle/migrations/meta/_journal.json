@@ -22,6 +22,13 @@
       "when": 1792527137590,
       "tag": "0002_add_db_cells_created_at",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792527627064,
+      "tag": "0003_create_ai_chat",
+      "breakpoints": true
     }
   ]
 }
