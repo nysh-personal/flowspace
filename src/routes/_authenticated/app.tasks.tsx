@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import { AiTasksPanel } from "@/components/ai";
 import { EmptyNote, QuickAdd, TaskRow } from "@/components/tasks";
 import { useCrud, useLists, useTasks } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -39,6 +40,7 @@ function Tasks() {
         )}
       </div>
       <QuickAdd defaults={list ? { list_id: list } : {}} />
+      <AiTasksPanel listId={list ?? null} />
       <section>
         {open.length ? open.map((t) => <TaskRow key={t.id} task={t} />) : <EmptyNote>All clear. Add something above.</EmptyNote>}
       </section>

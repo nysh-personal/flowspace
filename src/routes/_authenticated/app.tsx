@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { CalendarDays, CheckSquare, FileText, Flame, Inbox, KanbanSquare, LogOut, Menu, Plus, Sun, X } from "lucide-react";
+import { CalendarDays, CheckSquare, FileText, Flame, Inbox, KanbanSquare, LogOut, Menu, MessageCircle, Plus, Sun, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { LIST_COLORS, useCrud, useDatabases, useLists, usePages, type Page } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ const nav = [
   { to: "/app/board", label: "Board", icon: KanbanSquare },
   { to: "/app/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/app/habits", label: "Habits", icon: Flame },
+  { to: "/app/ai", label: "Ask Flo (AI)", icon: MessageCircle },
 ] as const;
 
 function AppLayout() {
