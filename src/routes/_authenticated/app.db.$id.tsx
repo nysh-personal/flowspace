@@ -198,6 +198,7 @@ function DatabasePage() {
           cellMap={cellMap}
           setCell={setCell}
           fieldCrud={fieldCrud}
+          rowCrud={rowCrud}
           addRow={addRow}
           sort={sort}
           onSort={cycleSort}
@@ -637,7 +638,7 @@ function CalendarView({
                 <span className="font-semibold">{format(d, "d")}</span>
                 <button
                   onClick={() => addRow({ fieldId: dateField.id, value: format(d, "yyyy-MM-dd") })}
-                  className="opacity-0 transition hover:opacity-100 md:group-hover:opacity-60"
+                  className="opacity-40 transition hover:opacity-100"
                   aria-label={`Add row on ${format(d, "MMM d")}`}
                 >
                   <Plus className="h-3 w-3" />

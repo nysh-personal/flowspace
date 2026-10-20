@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { CalendarDays, CheckSquare, FileText, Flame, Inbox, KanbanSquare, LogOut, Menu, Plus, Sun, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { LIST_COLORS, useCrud, useLists, usePages, type Page } from "@/lib/data";
+import { LIST_COLORS, useCrud, useDatabases, useLists, usePages, type Page } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/app")({
@@ -65,6 +65,26 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
     qc.clear();
     await supabase.auth.signOut();
     navigate({ to: "/auth", replace: true });
+  }
+  async function addDatabase() {
+    const d = await dbCrud.insert.mutateAsync({ title: "Untitled database" });
+    await Promise.all([
+      fieldCrud.insert.mutateAsync({ database_id: d.id, name: "Name", type: "text" }),
+      fieldCrud.insert.mutateAsync({
+        database_id: d.id,
+        name: "Status",
+        type: "select",
+        options: [
+          { name: "To do", color: "sky" },
+          { name: "In progress", color: "sun" },
+          { name: "Done", color: "lime" },
+        ],
+      }),
+      fieldCrud.insert.mutateAsync({ database_id: d.id, name: "Date", type: "date" }),
+      fieldCrud.insert.mutateAsync({ database_id: d.id, name: "Done", type: "checkbox" }),
+    ]);
+    onNavigate();
+    navigate({ to: "/app/db/$id", params: { id: d.id } });
   }
 
   const linkCls = "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm hover:bg-sidebar-accent";
