@@ -224,6 +224,7 @@ function TableView({
   cellMap,
   setCell,
   fieldCrud,
+  rowCrud,
   addRow,
   sort,
   onSort,
@@ -233,6 +234,7 @@ function TableView({
   cellMap: Map<string, DbCell>;
   setCell: (rowId: string, fieldId: string, value: unknown) => void;
   fieldCrud: ReturnType<typeof useCrud>;
+  rowCrud: ReturnType<typeof useCrud>;
   addRow: (extra?: { fieldId: string; value: unknown }) => void;
   sort: { fieldId: string; dir: "asc" | "desc" } | null;
   onSort: (fieldId: string) => void;
