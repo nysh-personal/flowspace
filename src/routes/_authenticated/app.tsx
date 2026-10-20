@@ -53,6 +53,9 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [newList, setNewList] = useState<string | null>(null);
+  const { data: databases = [] } = useDatabases();
+  const dbCrud = useCrud("databases");
+  const fieldCrud = useCrud("db_fields");
   const colors = Object.keys(LIST_COLORS);
 
   async function addPage(parent_id: string | null = null) {
@@ -139,6 +142,23 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
         {pages.length === 0 && (
           <button onClick={() => addPage()} className={cn(linkCls, "w-full opacity-60")}>
             <FileText className="h-4 w-4" /> New page
+          </button>
+        )}
+      </section>
+
+      <section>
+        <div className="mb-1 flex items-center justify-between px-2.5 text-xs font-semibold uppercase tracking-wider opacity-60">
+          Databases
+          <button onClick={addDatabase} aria-label="New database"><Plus className="h-4 w-4" /></button>
+        </div>
+        {databases.map((d) => (
+          <Link key={d.id} to="/app/db/$id" params={{ id: d.id }} onClick={onNavigate} className={linkCls} activeProps={{ className: activeCls }}>
+            <span>{d.icon}</span> <span className="truncate">{d.title}</span>
+          </Link>
+        ))}
+        {databases.length === 0 && (
+          <button onClick={addDatabase} className={cn(linkCls, "w-full opacity-60")}>
+            🗂️ New database
           </button>
         )}
       </section>
