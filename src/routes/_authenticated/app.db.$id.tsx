@@ -95,7 +95,7 @@ function DatabasePage() {
   function setCell(rowId: string, fieldId: string, value: unknown) {
     const existing = cellMap.get(`${rowId}:${fieldId}`);
     if (existing) cellCrud.update.mutate({ id: existing.id, value });
-    else cellCrud.insert.mutate({ row_id: rowId, field_id: field_id, value });
+    else cellCrud.insert.mutate({ row_id: rowId, field_id: fieldId, value });
   }
 
   function addRow(extra?: { fieldId: string; value: unknown }) {
@@ -258,7 +258,7 @@ function TableView({
                   />
                   <select
                     value={f.type}
-                    onChange={(e) => fieldCrud.update.mutate({ id: f.id, type: e.target.value })}
+                    onChange={(e) => fieldCrud.update.mutate({ id: f.id, type: e.target.value as FieldType })}
                     className="cursor-pointer bg-transparent text-xs text-muted-foreground outline-none"
                     aria-label="Field type"
                   >
@@ -371,7 +371,7 @@ function OptionsEditor({ field, fieldCrud }: { field: DbField; fieldCrud: Return
   );
 }
 
-function CellEditor({ field, cell, onSet }: { field: DbField; cell?: DbCell; onSet: (v: unknown) => void }) {
+function CellEditor({ field, cell, onSet }: { field: DbField; cell?: DbCell | undefined; onSet: (v: unknown) => void }) {
   const value = cell?.value;
   if (field.type === "checkbox") {
     return (
