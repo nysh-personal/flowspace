@@ -302,7 +302,7 @@ function TableView({
               ))}
               <td className="p-1 text-center">
                 <button
-                  onClick={() => rowCrudRemove(r.id)}
+                  onClick={() => rowCrud.remove.mutate(r.id)}
                   className="opacity-0 transition group-hover:opacity-60 hover:!opacity-100"
                   aria-label="Delete row"
                 >
@@ -325,10 +325,6 @@ function TableView({
       </table>
     </div>
   );
-
-  function rowCrudRemove(id: string) {
-    fieldCrud.remove.mutate(id);
-  }
 }
 
 function OptionsEditor({ field, fieldCrud }: { field: DbField; fieldCrud: ReturnType<typeof useCrud> }) {
