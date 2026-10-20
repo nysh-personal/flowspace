@@ -8,6 +8,10 @@ export type List = Database["public"]["Tables"]["lists"]["Row"];
 export type Page = Database["public"]["Tables"]["pages"]["Row"];
 export type Habit = Database["public"]["Tables"]["habits"]["Row"];
 export type HabitLog = Database["public"]["Tables"]["habit_logs"]["Row"];
+export type DbTable = Database["public"]["Tables"]["databases"]["Row"];
+export type DbField = Database["public"]["Tables"]["db_fields"]["Row"];
+export type DbRow = Database["public"]["Tables"]["db_rows"]["Row"];
+export type DbCell = Database["public"]["Tables"]["db_cells"]["Row"];
 
 export const STATUSES = [
   { id: "todo", label: "To do", color: "bg-sky" },
@@ -36,7 +40,7 @@ function must<T>(r: { data: T | null; error: unknown }): T {
   return r.data as T;
 }
 
-function useTable<T>(table: "tasks" | "lists" | "pages" | "habits" | "habit_logs", order = "created_at") {
+function useTable<T>(table: "tasks" | "lists" | "pages" | "habits" | "habit_logs" | "databases" | "db_fields" | "db_rows" | "db_cells", order = "created_at") {
   return useQuery({
     queryKey: [table],
     queryFn: async () =>
@@ -49,8 +53,12 @@ export const useLists = () => useTable<List>("lists");
 export const usePages = () => useTable<Page>("pages");
 export const useHabits = () => useTable<Habit>("habits");
 export const useHabitLogs = () => useTable<HabitLog>("habit_logs", "day");
+export const useDatabases = () => useTable<DbTable>("databases");
+export const useDbFields = () => useTable<DbField>("db_fields", "position");
+export const useDbRows = () => useTable<DbRow>("db_rows", "position");
+export const useDbCells = () => useTable<DbCell>("db_cells");
 
-type TableName = "tasks" | "lists" | "pages" | "habits" | "habit_logs";
+type TableName = "tasks" | "lists" | "pages" | "habits" | "habit_logs" | "databases" | "db_fields" | "db_rows" | "db_cells";
 
 export function useCrud(table: TableName) {
   const qc = useQueryClient();

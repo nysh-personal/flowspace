@@ -1,0 +1,1 @@
+alter table public.db_cells add column created_at timestamptz not null default now();

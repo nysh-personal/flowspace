@@ -18,6 +18,7 @@ import { Route as AuthenticatedAppBoardRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAppCalendarRouteImport } from './routes/_authenticated/app.calendar'
 import { Route as AuthenticatedAppHabitsRouteImport } from './routes/_authenticated/app.habits'
 import { Route as AuthenticatedAppTasksRouteImport } from './routes/_authenticated/app.tasks'
+import { Route as AuthenticatedAppDbIdRouteImport } from './routes/_authenticated/app.db.$id'
 import { Route as AuthenticatedAppPagesIdRouteImport } from './routes/_authenticated/app.pages.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,11 @@ const AuthenticatedAppTasksRoute = AuthenticatedAppTasksRouteImport.update({
   path: '/tasks',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppDbIdRoute = AuthenticatedAppDbIdRouteImport.update({
+  id: '/db/$id',
+  path: '/db/$id',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppPagesIdRoute = AuthenticatedAppPagesIdRouteImport.update({
   id: '/pages/$id',
   path: '/pages/$id',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/app/habits': typeof AuthenticatedAppHabitsRoute
   '/app/tasks': typeof AuthenticatedAppTasksRoute
   '/app/': typeof AuthenticatedAppIndexRoute
+  '/app/db/$id': typeof AuthenticatedAppDbIdRoute
   '/app/pages/$id': typeof AuthenticatedAppPagesIdRoute
 }
 export interface FileRoutesByTo {
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/app/habits': typeof AuthenticatedAppHabitsRoute
   '/app/tasks': typeof AuthenticatedAppTasksRoute
   '/app': typeof AuthenticatedAppIndexRoute
+  '/app/db/$id': typeof AuthenticatedAppDbIdRoute
   '/app/pages/$id': typeof AuthenticatedAppPagesIdRoute
 }
 export interface FileRoutesById {
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/_authenticated/app/habits': typeof AuthenticatedAppHabitsRoute
   '/_authenticated/app/tasks': typeof AuthenticatedAppTasksRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
+  '/_authenticated/app/db/$id': typeof AuthenticatedAppDbIdRoute
   '/_authenticated/app/pages/$id': typeof AuthenticatedAppPagesIdRoute
 }
 export interface FileRouteTypes {
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/app/habits'
     | '/app/tasks'
     | '/app/'
+    | '/app/db/$id'
     | '/app/pages/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/app/habits'
     | '/app/tasks'
     | '/app'
+    | '/app/db/$id'
     | '/app/pages/$id'
   id:
     | '__root__'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/habits'
     | '/_authenticated/app/tasks'
     | '/_authenticated/app/'
+    | '/_authenticated/app/db/$id'
     | '/_authenticated/app/pages/$id'
   fileRoutesById: FileRoutesById
 }
@@ -212,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppTasksRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/db/$id': {
+      id: '/_authenticated/app/db/$id'
+      path: '/db/$id'
+      fullPath: '/app/db/$id'
+      preLoaderRoute: typeof AuthenticatedAppDbIdRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/pages/$id': {
       id: '/_authenticated/app/pages/$id'
       path: '/pages/$id'
@@ -228,6 +247,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppHabitsRoute: typeof AuthenticatedAppHabitsRoute
   AuthenticatedAppTasksRoute: typeof AuthenticatedAppTasksRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+  AuthenticatedAppDbIdRoute: typeof AuthenticatedAppDbIdRoute
   AuthenticatedAppPagesIdRoute: typeof AuthenticatedAppPagesIdRoute
 }
 
@@ -237,6 +257,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppHabitsRoute: AuthenticatedAppHabitsRoute,
   AuthenticatedAppTasksRoute: AuthenticatedAppTasksRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+  AuthenticatedAppDbIdRoute: AuthenticatedAppDbIdRoute,
   AuthenticatedAppPagesIdRoute: AuthenticatedAppPagesIdRoute,
 }
 

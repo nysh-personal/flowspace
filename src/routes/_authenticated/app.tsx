@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { CalendarDays, CheckSquare, FileText, Flame, Inbox, KanbanSquare, LogOut, Menu, Plus, Sun, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { LIST_COLORS, useCrud, useLists, usePages, type Page } from "@/lib/data";
+import { LIST_COLORS, useCrud, useDatabases, useLists, usePages, type Page } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/app")({
@@ -53,6 +53,9 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [newList, setNewList] = useState<string | null>(null);
+  const { data: databases = [] } = useDatabases();
+  const dbCrud = useCrud("databases");
+  const fieldCrud = useCrud("db_fields");
   const colors = Object.keys(LIST_COLORS);
 
   async function addPage(parent_id: string | null = null) {
@@ -65,6 +68,26 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
     qc.clear();
     await supabase.auth.signOut();
     navigate({ to: "/auth", replace: true });
+  }
+  async function addDatabase() {
+    const d = await dbCrud.insert.mutateAsync({ title: "Untitled database" });
+    await Promise.all([
+      fieldCrud.insert.mutateAsync({ database_id: d.id, name: "Name", type: "text" }),
+      fieldCrud.insert.mutateAsync({
+        database_id: d.id,
+        name: "Status",
+        type: "select",
+        options: [
+          { name: "To do", color: "sky" },
+          { name: "In progress", color: "sun" },
+          { name: "Done", color: "lime" },
+        ],
+      }),
+      fieldCrud.insert.mutateAsync({ database_id: d.id, name: "Date", type: "date" }),
+      fieldCrud.insert.mutateAsync({ database_id: d.id, name: "Done", type: "checkbox" }),
+    ]);
+    onNavigate();
+    navigate({ to: "/app/db/$id", params: { id: d.id } });
   }
 
   const linkCls = "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm hover:bg-sidebar-accent";
@@ -119,6 +142,23 @@ function Sidebar({ onNavigate }: { onNavigate: () => void }) {
         {pages.length === 0 && (
           <button onClick={() => addPage()} className={cn(linkCls, "w-full opacity-60")}>
             <FileText className="h-4 w-4" /> New page
+          </button>
+        )}
+      </section>
+
+      <section>
+        <div className="mb-1 flex items-center justify-between px-2.5 text-xs font-semibold uppercase tracking-wider opacity-60">
+          Databases
+          <button onClick={addDatabase} aria-label="New database"><Plus className="h-4 w-4" /></button>
+        </div>
+        {databases.map((d) => (
+          <Link key={d.id} to="/app/db/$id" params={{ id: d.id }} onClick={onNavigate} className={linkCls} activeProps={{ className: activeCls }}>
+            <span>{d.icon}</span> <span className="truncate">{d.title}</span>
+          </Link>
+        ))}
+        {databases.length === 0 && (
+          <button onClick={addDatabase} className={cn(linkCls, "w-full opacity-60")}>
+            🗂️ New database
           </button>
         )}
       </section>
