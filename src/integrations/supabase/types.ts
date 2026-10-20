@@ -14,6 +14,153 @@ export type Database = {
   }
   public: {
     Tables: {
+      databases: {
+        Row: {
+          created_at: string
+          icon: string
+          id: string
+          parent_id: string | null
+          title: string
+          user_id: string
+          view: string
+        }
+        Insert: {
+          created_at?: string
+          icon?: string
+          id?: string
+          parent_id?: string | null
+          title?: string
+          user_id?: string
+          view?: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string
+          id?: string
+          parent_id?: string | null
+          title?: string
+          user_id?: string
+          view?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "databases_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      db_cells: {
+        Row: {
+          field_id: string
+          id: string
+          row_id: string
+          user_id: string
+          value: Json | null
+        }
+        Insert: {
+          field_id: string
+          id?: string
+          row_id: string
+          user_id?: string
+          value?: Json | null
+        }
+        Update: {
+          field_id?: string
+          id?: string
+          row_id?: string
+          user_id?: string
+          value?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "db_cells_field_id_fkey"
+            columns: ["field_id"]
+            isOneToOne: false
+            referencedRelation: "db_fields"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "db_cells_row_id_fkey"
+            columns: ["row_id"]
+            isOneToOne: false
+            referencedRelation: "db_rows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      db_fields: {
+        Row: {
+          database_id: string
+          id: string
+          name: string
+          options: Json
+          position: number
+          type: string
+          user_id: string
+        }
+        Insert: {
+          database_id: string
+          id?: string
+          name?: string
+          options?: Json
+          position?: number
+          type?: string
+          user_id?: string
+        }
+        Update: {
+          database_id?: string
+          id?: string
+          name?: string
+          options?: Json
+          position?: number
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "db_fields_database_id_fkey"
+            columns: ["database_id"]
+            isOneToOne: false
+            referencedRelation: "databases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      db_rows: {
+        Row: {
+          created_at: string
+          database_id: string
+          id: string
+          position: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          database_id: string
+          id?: string
+          position?: number
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          database_id?: string
+          id?: string
+          position?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "db_rows_database_id_fkey"
+            columns: ["database_id"]
+            isOneToOne: false
+            referencedRelation: "databases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       habit_logs: {
         Row: {
           day: string
