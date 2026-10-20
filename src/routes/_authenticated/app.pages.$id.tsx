@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { FilePlus, Trash2 } from "lucide-react";
 import { useCrud, usePages } from "@/lib/data";
+import { AiWriteBar } from "@/components/ai";
 
 export const Route = createFileRoute("/_authenticated/app/pages/$id")({
   component: PageEditor,
@@ -46,6 +47,14 @@ function PageEditor() {
         onChange={(e) => { setTitle(e.target.value); save({ title: e.target.value }); }}
         placeholder="Untitled"
         className="mt-2 w-full bg-transparent font-display text-4xl font-extrabold outline-none md:text-5xl"
+      />
+      <AiWriteBar
+        text={content}
+        onResult={(out, mode) => {
+          const next = mode === "improve" ? out : mode === "summarize" ? `${content}\n\nSummary:\n${out}` : `${content}${content ? "\n\n" : ""}${out}`;
+          setContent(next);
+          save({ content: next });
+        }}
       />
       <textarea
         value={content}

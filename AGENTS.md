@@ -11,3 +11,5 @@
 
 ## Architecture
 - Signed-in workspace lives under `src/routes/_authenticated/app*`; data access goes through the react-query hooks in `src/lib/data.ts` (browser client + RLS), so every table is owner-scoped by `user_id = auth.uid()`.
+
+- AI features call MiniMax (user-owned key MINIMAX_API_KEY) only from server functions in src/lib/ai.functions.ts via src/lib/minimax.server.ts; the user chose their own provider over the built-in gateway.

@@ -18,6 +18,8 @@ import { Route as AuthenticatedAppBoardRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAppCalendarRouteImport } from './routes/_authenticated/app.calendar'
 import { Route as AuthenticatedAppHabitsRouteImport } from './routes/_authenticated/app.habits'
 import { Route as AuthenticatedAppTasksRouteImport } from './routes/_authenticated/app.tasks'
+import { Route as AuthenticatedAppAiIndexRouteImport } from './routes/_authenticated/app.ai.index'
+import { Route as AuthenticatedAppAiThreadIdRouteImport } from './routes/_authenticated/app.ai.$threadId'
 import { Route as AuthenticatedAppDbIdRouteImport } from './routes/_authenticated/app.db.$id'
 import { Route as AuthenticatedAppPagesIdRouteImport } from './routes/_authenticated/app.pages.$id'
 
@@ -66,6 +68,17 @@ const AuthenticatedAppTasksRoute = AuthenticatedAppTasksRouteImport.update({
   path: '/tasks',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppAiIndexRoute = AuthenticatedAppAiIndexRouteImport.update({
+  id: '/ai/',
+  path: '/ai/',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppAiThreadIdRoute =
+  AuthenticatedAppAiThreadIdRouteImport.update({
+    id: '/ai/$threadId',
+    path: '/ai/$threadId',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppDbIdRoute = AuthenticatedAppDbIdRouteImport.update({
   id: '/db/$id',
   path: '/db/$id',
@@ -86,8 +99,10 @@ export interface FileRoutesByFullPath {
   '/app/habits': typeof AuthenticatedAppHabitsRoute
   '/app/tasks': typeof AuthenticatedAppTasksRoute
   '/app/': typeof AuthenticatedAppIndexRoute
+  '/app/ai/$threadId': typeof AuthenticatedAppAiThreadIdRoute
   '/app/db/$id': typeof AuthenticatedAppDbIdRoute
   '/app/pages/$id': typeof AuthenticatedAppPagesIdRoute
+  '/app/ai/': typeof AuthenticatedAppAiIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -97,8 +112,10 @@ export interface FileRoutesByTo {
   '/app/habits': typeof AuthenticatedAppHabitsRoute
   '/app/tasks': typeof AuthenticatedAppTasksRoute
   '/app': typeof AuthenticatedAppIndexRoute
+  '/app/ai/$threadId': typeof AuthenticatedAppAiThreadIdRoute
   '/app/db/$id': typeof AuthenticatedAppDbIdRoute
   '/app/pages/$id': typeof AuthenticatedAppPagesIdRoute
+  '/app/ai': typeof AuthenticatedAppAiIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -111,8 +128,10 @@ export interface FileRoutesById {
   '/_authenticated/app/habits': typeof AuthenticatedAppHabitsRoute
   '/_authenticated/app/tasks': typeof AuthenticatedAppTasksRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
+  '/_authenticated/app/ai/$threadId': typeof AuthenticatedAppAiThreadIdRoute
   '/_authenticated/app/db/$id': typeof AuthenticatedAppDbIdRoute
   '/_authenticated/app/pages/$id': typeof AuthenticatedAppPagesIdRoute
+  '/_authenticated/app/ai/': typeof AuthenticatedAppAiIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,8 +144,10 @@ export interface FileRouteTypes {
     | '/app/habits'
     | '/app/tasks'
     | '/app/'
+    | '/app/ai/$threadId'
     | '/app/db/$id'
     | '/app/pages/$id'
+    | '/app/ai/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -136,8 +157,10 @@ export interface FileRouteTypes {
     | '/app/habits'
     | '/app/tasks'
     | '/app'
+    | '/app/ai/$threadId'
     | '/app/db/$id'
     | '/app/pages/$id'
+    | '/app/ai'
   id:
     | '__root__'
     | '/'
@@ -149,8 +172,10 @@ export interface FileRouteTypes {
     | '/_authenticated/app/habits'
     | '/_authenticated/app/tasks'
     | '/_authenticated/app/'
+    | '/_authenticated/app/ai/$threadId'
     | '/_authenticated/app/db/$id'
     | '/_authenticated/app/pages/$id'
+    | '/_authenticated/app/ai/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -224,6 +249,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppTasksRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/ai/': {
+      id: '/_authenticated/app/ai/'
+      path: '/ai'
+      fullPath: '/app/ai/'
+      preLoaderRoute: typeof AuthenticatedAppAiIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/ai/$threadId': {
+      id: '/_authenticated/app/ai/$threadId'
+      path: '/ai/$threadId'
+      fullPath: '/app/ai/$threadId'
+      preLoaderRoute: typeof AuthenticatedAppAiThreadIdRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/db/$id': {
       id: '/_authenticated/app/db/$id'
       path: '/db/$id'
@@ -247,8 +286,10 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppHabitsRoute: typeof AuthenticatedAppHabitsRoute
   AuthenticatedAppTasksRoute: typeof AuthenticatedAppTasksRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+  AuthenticatedAppAiThreadIdRoute: typeof AuthenticatedAppAiThreadIdRoute
   AuthenticatedAppDbIdRoute: typeof AuthenticatedAppDbIdRoute
   AuthenticatedAppPagesIdRoute: typeof AuthenticatedAppPagesIdRoute
+  AuthenticatedAppAiIndexRoute: typeof AuthenticatedAppAiIndexRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
@@ -257,8 +298,10 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppHabitsRoute: AuthenticatedAppHabitsRoute,
   AuthenticatedAppTasksRoute: AuthenticatedAppTasksRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+  AuthenticatedAppAiThreadIdRoute: AuthenticatedAppAiThreadIdRoute,
   AuthenticatedAppDbIdRoute: AuthenticatedAppDbIdRoute,
   AuthenticatedAppPagesIdRoute: AuthenticatedAppPagesIdRoute,
+  AuthenticatedAppAiIndexRoute: AuthenticatedAppAiIndexRoute,
 }
 
 const AuthenticatedAppRouteWithChildren =

@@ -35,6 +35,7 @@ import {
   type DbRow,
 } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { AiFillPanel } from "@/components/ai";
 
 export const Route = createFileRoute("/_authenticated/app/db/$id")({
   head: () => ({ meta: [{ title: "Database — Flowspace" }, { name: "robots", content: "noindex" }] }),
@@ -152,6 +153,7 @@ function DatabasePage() {
         {db.icon} {db.title}
       </h1>
 
+      <div className="mb-4"><AiFillPanel databaseId={id} /></div>
       <div className="mb-5 flex flex-wrap items-center gap-2">
         <div className="flex gap-1 rounded-xl border-2 border-ink bg-card p-1">
           {(

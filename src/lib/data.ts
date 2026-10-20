@@ -13,6 +13,9 @@ export type DbField = Database["public"]["Tables"]["db_fields"]["Row"];
 export type DbRow = Database["public"]["Tables"]["db_rows"]["Row"];
 export type DbCell = Database["public"]["Tables"]["db_cells"]["Row"];
 
+export type AiThread = Database["public"]["Tables"]["ai_threads"]["Row"];
+export type AiMessage = Database["public"]["Tables"]["ai_messages"]["Row"];
+
 export const STATUSES = [
   { id: "todo", label: "To do", color: "bg-sky" },
   { id: "doing", label: "In progress", color: "bg-sun" },
@@ -40,7 +43,7 @@ function must<T>(r: { data: T | null; error: unknown }): T {
   return r.data as T;
 }
 
-function useTable<T>(table: "tasks" | "lists" | "pages" | "habits" | "habit_logs" | "databases" | "db_fields" | "db_rows" | "db_cells", order = "created_at") {
+function useTable<T>(table: "tasks" | "lists" | "pages" | "habits" | "habit_logs" | "databases" | "db_fields" | "db_rows" | "db_cells" | "ai_threads" | "ai_messages", order = "created_at") {
   return useQuery({
     queryKey: [table],
     queryFn: async () =>
@@ -58,7 +61,10 @@ export const useDbFields = () => useTable<DbField>("db_fields", "position");
 export const useDbRows = () => useTable<DbRow>("db_rows", "position");
 export const useDbCells = () => useTable<DbCell>("db_cells");
 
-type TableName = "tasks" | "lists" | "pages" | "habits" | "habit_logs" | "databases" | "db_fields" | "db_rows" | "db_cells";
+export const useAiThreads = () => useTable<AiThread>("ai_threads", "updated_at");
+export const useAiMessages = () => useTable<AiMessage>("ai_messages");
+
+type TableName = "tasks" | "lists" | "pages" | "habits" | "habit_logs" | "databases" | "db_fields" | "db_rows" | "db_cells" | "ai_threads" | "ai_messages";
 
 export function useCrud(table: TableName) {
   const qc = useQueryClient();
