@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Architecture
+- Signed-in workspace lives under `src/routes/_authenticated/app*`; data access goes through the react-query hooks in `src/lib/data.ts` (browser client + RLS), so every table is owner-scoped by `user_id = auth.uid()`.
