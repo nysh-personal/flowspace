@@ -54,6 +54,7 @@ export type Database = {
       }
       db_cells: {
         Row: {
+          created_at: string
           field_id: string
           id: string
           row_id: string
@@ -61,6 +62,7 @@ export type Database = {
           value: Json | null
         }
         Insert: {
+          created_at?: string
           field_id: string
           id?: string
           row_id: string
@@ -68,6 +70,7 @@ export type Database = {
           value?: Json | null
         }
         Update: {
+          created_at?: string
           field_id?: string
           id?: string
           row_id?: string

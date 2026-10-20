@@ -15,6 +15,13 @@
       "when": 1792526795435,
       "tag": "0001_create_databases",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792527137590,
+      "tag": "0002_add_db_cells_created_at",
+      "breakpoints": true
     }
   ]
 }
