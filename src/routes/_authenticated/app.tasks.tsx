@@ -6,7 +6,7 @@ import { useCrud, useLists, useTasks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/app/tasks")({
-  validateSearch: (s: Record<string, unknown>) => ({ list: typeof s.list === "string" ? s.list : undefined }),
+  validateSearch: (s: Record<string, unknown>) => ({ list: typeof s["list"] === "string" ? s["list"] : undefined }),
   component: Tasks,
 });
 

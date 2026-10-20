@@ -49,7 +49,7 @@ function Board() {
 
 function Card({ t }: { t: Task }) {
   const [open, setOpen] = useState(false);
-  const p = PRIORITIES[t.priority];
+  const p = PRIORITIES[t.priority] ?? PRIORITIES[0]!;
   return (
     <>
       <div
